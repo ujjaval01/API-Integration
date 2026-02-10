@@ -23,9 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.uv.apiintegration.model.PostViewModel
+//import com.uv.apiintegration.model.PostViewModel
+import com.uv.apiintegration.localJsonCall.PostViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.uv.apiintegration.data.Post
+//import com.uv.apiintegration.data.Post
+import com.uv.apiintegration.localJsonCall.Post
 import com.uv.apiintegration.data.UiState
 
 
@@ -66,11 +68,11 @@ fun PostScreen(
 
                     Text(text = "Check your Internet connection or restart the app")
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { viewModel.fetchPosts() }) {
-                        Text(text = "Retry")
-                    }
+//                    Spacer(modifier = Modifier.height(8.dp))
+//
+//                    Button(onClick = { viewModel.fetchPosts() }) {
+//                        Text(text = "Retry")
+//                    }
                 }
             }
         }
