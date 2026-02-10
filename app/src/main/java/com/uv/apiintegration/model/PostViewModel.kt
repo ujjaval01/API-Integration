@@ -7,17 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.uv.apiintegration.RetrofitInstance
 import com.uv.apiintegration.data.Post
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import com.uv.apiintegration.data.UiState
 import kotlinx.coroutines.launch
 
 
 class PostViewModel : ViewModel() {
 
-    var posts by mutableStateOf<List<Post>>(emptyList())
-        private set
-
-    var isRefreshing by mutableStateOf(false)
+    var uiState by mutableStateOf<UiState<List<Post>>>(UiState.Loading)
         private set
 
     init {
@@ -26,15 +22,20 @@ class PostViewModel : ViewModel() {
 
     fun fetchPosts() {
         viewModelScope.launch {
+
+            uiState = UiState.Loading   // 👈 loading start
+
             try {
-                isRefreshing = true
-                posts = RetrofitInstance.api.getPosts()
+                val response = RetrofitInstance.api.getPosts()
+
+                uiState = UiState.Success(response) // 👈 success
+
             } catch (e: Exception) {
-                // error handle
-            } finally {
-                isRefreshing = false
+
+                uiState = UiState.Error(
+                    e.localizedMessage ?: "Something went wrong"
+                )
             }
         }
     }
 }
-
